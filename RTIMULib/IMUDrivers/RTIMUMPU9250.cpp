@@ -610,29 +610,11 @@ bool RTIMUMPU9250::IMURead()
     RTMath::convertToVector(fifoData + 6, m_imuData.gyro, m_gyroScale, true);
     RTMath::convertToVector(compassData + 1, m_imuData.compass, 0.6f, false);
 
-    //  sort out gyro axes
-
-    m_imuData.gyro.setX(m_imuData.gyro.x());
-    m_imuData.gyro.setY(-m_imuData.gyro.y());
-    m_imuData.gyro.setZ(-m_imuData.gyro.z());
-
-    //  sort out accel data;
-
-    m_imuData.accel.setX(-m_imuData.accel.x());
-
     //  use the compass fuse data adjustments
 
     m_imuData.compass.setX(m_imuData.compass.x() * m_compassAdjust[0]);
     m_imuData.compass.setY(m_imuData.compass.y() * m_compassAdjust[1]);
     m_imuData.compass.setZ(m_imuData.compass.z() * m_compassAdjust[2]);
-
-    //  sort out compass axes
-
-    float temp;
-
-    temp = m_imuData.compass.x();
-    m_imuData.compass.setX(m_imuData.compass.y());
-    m_imuData.compass.setY(-temp);
 
     //  now do standard processing
 

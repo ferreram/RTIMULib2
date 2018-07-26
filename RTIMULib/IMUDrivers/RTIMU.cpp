@@ -234,6 +234,10 @@ void RTIMU::gyroBiasInit()
 
 void RTIMU::handleGyroBias()
 {
+    // If the settings file specifies false valid gyro bias
+    if (!m_settings->m_gyroBiasValid)
+        return;
+
     // do axis rotation
 
     if ((m_settings->m_axisRotation > 0) && (m_settings->m_axisRotation < RTIMU_AXIS_ROTATION_COUNT)) {
